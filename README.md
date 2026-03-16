@@ -17,4 +17,4 @@ El aplicativo esta desarrollado para ser ejecutado en un entorno web. Donde el u
 
 ## Pagina de inicio del programa.
 
-<img src="imagenes/inicio.png" >
+<img src="/Front End/imagenes/inicio.png" >
