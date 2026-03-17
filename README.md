@@ -21,3 +21,5 @@ El aplicativo esta desarrollado para ser ejecutado en un entorno web. Donde el u
 ## Codigo Html
 <img width="1154" height="616" alt="image" src="https://github.com/user-attachments/assets/34836ea0-7f38-4d0a-b7a8-3bef9621759e" />
 
+## Código CSS
+<img width="462" height="366" alt="image" src="https://github.com/user-attachments/assets/ead02705-f2f8-47c7-8ca1-e0d21bf49e63" />
