@@ -17,3 +17,7 @@ El aplicativo esta desarrollado para ser ejecutado en un entorno web. Donde el u
 ## Pagina de inicio del programa.
 
 <img src="/Front End/imagenes/inicio.png" >
+
+## Codigo Html
+<img width="1154" height="616" alt="image" src="https://github.com/user-attachments/assets/34836ea0-7f38-4d0a-b7a8-3bef9621759e" />
+
