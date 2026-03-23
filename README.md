@@ -16,10 +16,49 @@ El aplicativo esta desarrollado para ser ejecutado en un entorno web. Donde el u
 
 ## Pagina de inicio del programa.
 
-<img src="/Front End/imagenes/inicio.png" >
+<img src="imagenes/inicio.png" >
 
 ## Codigo Html.
 <img width="1154" height="616" alt="image" src="https://github.com/user-attachments/assets/34836ea0-7f38-4d0a-b7a8-3bef9621759e" />
 
 ## Código CSS.
 <img width="462" height="366" alt="image" src="https://github.com/user-attachments/assets/ead02705-f2f8-47c7-8ca1-e0d21bf49e63" />
+
+## CONEXION BASE DE DATOS CREACION DE SERVIDOR (flask python).
+
+importamos la librearia flask y herramientas de esa libreria. Adicional la libreria para la conexion de la base de datos. establecemos la conexión con nuestra base de datos usando la contraseña y usuaio y nombre de la base de datos. 
+
+
+![alt flask](imagenes/image.png) 
+
+## Render direccción a paginas html cuando son llamadas por el navegador.
+en la primera llamada del navegador hace apertura o retorna la pagina principal de acceso por medio de la funcion inicio, y creamos la funcion inicio_usuario que retornara la pagina thml siguiente despues de que el usuario accesada con su ussuario y contraseña correspondientes.
+
+![alt text](imagenes/image-1.png)
+
+## Funcion de login para validar datos de acceso.(python)
+
+la primera parte del app.route recibimos el mensaje del navegador por medio del metodo post y como direccion /login capturamos los datos eenviados por el html.
+
+por medio del metodo reques.form capturamos los datos enviados por el html y los alamcenamos en variables de python.
+
+una vez echo esto creamos una variable cursor que nos permitira realizar consulta y almacenar los datos en una lista tipo diccionario conexion.cursor(diccionary=true).
+
+Una vez echo esto realizamos la consulta a la base de datos por medio del procedimento creado que validar_usuario y enviamos los datos del html si estos se encuentran dentro de la base de datos retornara información la cual sera almacenda en una variable reultado la cual es un diccionario. 
+
+los datos se traen con el metodo cursor.stored_results y la ejecutamos en un for donde la variable res va a contener caada uno de esos datos con res.fetchall se sacan esos datos y se alamcenan en la lista diccionario resultado. despues comparamos la varible resultado si esta contiene datos llamamos un metodo (redirect) y una funcion  que redireccionara la pagina al siguiente HTMl si no se enviara un mensaje al HTml principal indicando un error.
+
+![alt funcion de login](image.png)
+
+### Procedimiento BD.(mysql)
+![alt procedimeinto](image-2.png)
+
+### Mensaje error.(html flask)
+![alt error](image-1.png)
+
+
+## validacion que archivo sea el principal.
+
+Solo ejcuta el archivo conexion si es el principal si detectara que esta importado en otro archivo no lo correria y el app.run inicia la app, debug true permite que los cambios que yo realice se vean inmediatamente en el navegador.
+
+![alt principal](image-3.png)
