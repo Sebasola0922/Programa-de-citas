@@ -48,17 +48,17 @@ Una vez echo esto realizamos la consulta a la base de datos por medio del proced
 
 los datos se traen con el metodo cursor.stored_results y la ejecutamos en un for donde la variable res va a contener caada uno de esos datos con res.fetchall se sacan esos datos y se alamcenan en la lista diccionario resultado. despues comparamos la varible resultado si esta contiene datos llamamos un metodo (redirect) y una funcion  que redireccionara la pagina al siguiente HTMl si no se enviara un mensaje al HTml principal indicando un error.
 
-![alt funcion de login](image.png)
+![alt login](<imagenes/Screenshot 2026-03-23 115243.png>)
 
 ### Procedimiento BD.(mysql)
-![alt procedimeinto](image-2.png)
+![proceidmiento](<imagenes/proceidmeinto BD.png>)
 
 ### Mensaje error.(html flask)
-![alt error](image-1.png)
+![errror](imagenes/error.png)
 
 
 ## validacion que archivo sea el principal.
 
 Solo ejcuta el archivo conexion si es el principal si detectara que esta importado en otro archivo no lo correria y el app.run inicia la app, debug true permite que los cambios que yo realice se vean inmediatamente en el navegador.
 
-![alt principal](image-3.png)
+![principal](<imagenes/archivo principla.png>)
