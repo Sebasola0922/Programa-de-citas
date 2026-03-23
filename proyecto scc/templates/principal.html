@@ -6,23 +6,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sccd</title>
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
 
 </head>
 
 <body style="background-color: whitesmoke;">
 
     <h1 style="color: black;font-family: Arial, Helvetica, sans-serif ;font-weight: bold;">Bienvenido a Sccd</h1>
-<div class="inicio-sesion"
-    <form action="#" method="post">
-        <label for:"Usuario">Usuario:</label>
+<div class="inicio-sesion">
+    <form action="/login" method="post">
+        <label for="Usuario">Usuario:</label>
         <input type="text" id="Usuario" name="Usuario" required><br><br>
-        <label for:"Contraseña">Contraseña:</label>
+        <label for="Contraseña">Contraseña:</label>
         <input type="password" id="Contraseña" name="Contraseña" required><br><br>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
 
         <a href="Principal.html" style="text-decoration: none;">Olvidaste tu contraseña</a><br><br>
         <input type="submit" value="Iniciar Sesión">
-
+    </form>
 </div>
 
 
