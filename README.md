@@ -62,3 +62,11 @@ los datos se traen con el metodo cursor.stored_results y la ejecutamos en un for
 Solo ejcuta el archivo conexion si es el principal si detectara que esta importado en otro archivo no lo correria y el app.run inicia la app, debug true permite que los cambios que yo realice se vean inmediatamente en el navegador.
 
 ![principal](<imagenes/archivo principla.png>)
+
+# DIAGRAMA MER (modelo entidad relacion).
+![alt text](<imagenes/diagrama mer.png>)
+
+## Diagrama logico.
+diccionario de datos.
+
+![diagrama logico](<imagenes/diagrama logico.png>)
