@@ -13,3 +13,12 @@ h1{
     margin-top: 50px;
     text-shadow: 2px 3px 25px #000000;
 }
+
+table, th, td {
+    border: 1px solid black;
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+   
+
+}

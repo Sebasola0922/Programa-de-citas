@@ -70,3 +70,18 @@ Solo ejcuta el archivo conexion si es el principal si detectara que esta importa
 diccionario de datos.
 
 ![diagrama logico](<imagenes/diagrama logico.png>)
+
+# INICIO DE SESION.
+
+Para el inicio de sesion puede usar contraseña 12234 y usuario sebas. 
+
+<img src="imagenes/inicio.png" >
+
+## Acceso al CRUD se realiza por medio de html python (flask).
+
+dentro de python usando el framewok flask hacemos llamado a los procedimentos internos del SQL y recargamos nuevamente la pagina para poder visualizar dichos cambios. Los cuales se pueden realizar con la siguiente interfaz la cual puede agregar,leer,actualizar y eliminar registros.
+![CRUD](imagenes/CRUD.png)
+
+## Acceso a los archivos.
+
+Como tenemos el estructura flask cada archivo se encuentra en una carpeta especifica por favor ejecutar el archivo conexion.py antes de hacer apertura de los html.

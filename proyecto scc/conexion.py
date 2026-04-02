@@ -26,12 +26,6 @@ except Exception as e:
 def inicio():   
     return render_template('principal.html')
 
-# funcion para redirigir al usuario a la página de inicio después de iniciar sesión correctamente
-
-@app.route('/inicio')
-def inicio_usuario():
-    return render_template('inicio.html')
-
 
 
 # recibimos los datos del formulario de inicio de sesión y los validamos con la función almacenada en MySQL, si el resultado es correcto mostramos un mensaje de éxito, de lo contrario mostramos un mensaje de error
@@ -52,10 +46,73 @@ def login():
 
     if resultado:
         print(" Login correcto")
-        return redirect(url_for('inicio_usuario'))
+        return redirect(url_for('mostrar_registros'))
     else:
         print(" Datos incorrectos")
         return render_template('principal.html', error="Usuario o contraseña incorrectos")
+    
+    
+
+# Mostramos los datos en la tabla de la página de inicio, para esto llamamos a la función almacenada en MySQL que nos devuelve los datos de los usuarios registrados y los mostramos en la tabla
+
+@app.route('/inicio')
+def mostrar_registros():
+    cursor = conexion.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM Usuario")
+    registros = cursor.fetchall()
+    print(" Registros obtenidos:", registros)
+    cursor.close()
+
+    return render_template('inicio.html', registros=registros)
+
+    
+# procedimientos de eliminado actualizado y creacion
+
+
+@app.route('/procesar', methods=['POST'])
+
+def procesar():
+
+    accion = request.form['accion']
+    cedula = request.form['Cedula']
+
+    cursor = conexion.cursor()
+
+
+    if accion == 'Actualizar':
+        nombre = request.form['Nombre']
+        apellido = request.form['Apellido']
+        cedula = request.form['Cedula']
+        usuario = request.form['Usuario']
+        contraseña = request.form['Contraseña']
+        cursor.callproc('actualizar_usuario', [cedula,nombre, apellido,usuario, contraseña])
+        conexion.commit()
+        print(" Usuario actualizado")
+
+    elif accion == "Agregar":
+        nombre = request.form['Nombre']
+        apellido = request.form['Apellido']
+        cedula = request.form['Cedula']
+        usuario = request.form['Usuario']
+        contraseña = request.form['Contraseña']
+        cursor.callproc('agregar', [ nombre, apellido,cedula, usuario, contraseña])
+
+        conexion.commit()
+        print(" Usuario agregado")
+    
+
+    elif accion == 'Eliminar':
+        cedula = request.form['Cedula']
+
+        cursor.callproc('eliminar_usuario', [cedula])
+        conexion.commit()
+        print("Usuario eliminado")
+
+    cursor.close()
+
+    return redirect(url_for('mostrar_registros'))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
