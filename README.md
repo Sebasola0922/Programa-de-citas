@@ -1,22 +1,33 @@
 <h1 style= "color: blue"># Sistema de citas de cargue y descargue sccd</h1>
 
 ## Descripción
-El sistema de asignación de citas de cargue y descargue es una aplicación desarrollada para el uso de pymes las cuales no cuenten con los suficientes recursos para la adquisición de un ERP (Enterprise resource planning) que tenga esta funcionalidad. El aplicativo surge para satisfacer la necesidad de controlar la logística al interior de las compañías, actividad que no se realiza en la mayoría de las pymes. El sistema deberá funcionar de manera local y en entorno web ya que interconectará compañías de trasporte con empresas de diferentes sectores. Esto permitirá el control de los tiempos de cargue y descargue de vehículos, así como brindar datos para su análisis.
+El sistema de asignación de citas de cargue y descargue es una aplicación desarrollada para el uso de pymes las cuales no cuenten con los suficientes recursos para la adquisición de un ERP (Enterprise resource planning) que tenga esta funcionalidad. El aplicativo surge para satisfacer la necesidad de controlar la logística al interior de las compañías, actividad que no se realiza en la mayoría de las pymes. El sistema deberá funcionar  en entorno web ya que interconectará compañías de trasporte con empresas de diferentes sectores. Esto permitirá el control de los tiempos de cargue y descargue de vehículos, así como brindar datos para su análisis.
 
 ## Tecnologias usadas
-- Html
-- CSS
-- python
-- Mysql
+- Python 3.11+
+- Flask 2.x
+- MySQL 8+
+- HTML5
+- CSS3
+- JavaScript (Fetch API)
 
+## Base de Datos.
 
-## Como Usarlo.
+- Motor: MySQL
+- Nombre: sistema_citas
+- Tablas principales:
+empresa
+usuario
+vehiculo
+cita
+reasignacion
 
-El aplicativo esta desarrollado para ser ejecutado en un entorno web. Donde el usuario debera acceder sus credenciales, de acuerdo al rol que desempeñe dentro del sistema. La  organización que adquiera el servicio recibira un usuario inicial con la cual podra ejecutar la confirguracion inciacial de los usuarios. Si por algun caso el usuario es bloqueado debera comunicarse por medio de correo electronico con la empresa con la cual contrato el servicio para que sea desbloqueado y actualizado su usuario. Es de aclarar que esto solo pasara con el usuario maestro. Los usuarios que se creen por el usuario maestro podran ser desbloqueados por dicho usuario.
+## Requisitos
 
-## Pagina de inicio del programa.
+- Python instalado
+- MySQL Server activo
+- Puerto 5000 libre
 
-<img src="imagenes/inicio.png" >
 
 ## Codigo Html.
 <img width="1154" height="616" alt="image" src="https://github.com/user-attachments/assets/34836ea0-7f38-4d0a-b7a8-3bef9621759e" />
@@ -71,17 +82,78 @@ diccionario de datos.
 
 ![diagrama logico](<imagenes/diagrama logico.png>)
 
+## Como Usarlo.
+
+El aplicativo esta desarrollado para ser ejecutado en un entorno web. Donde el usuario debera acceder sus credenciales, de acuerdo al rol que desempeñe dentro del sistema. La  organización que adquiera el servicio recibira un usuario inicial con la cual podra ejecutar la confirguracion inciacial de los usuarios. Si por algun caso el usuario es bloqueado debera comunicarse por medio de correo electronico con la empresa con la cual contrato el servicio para que sea desbloqueado y actualizado su usuario. Es de aclarar que esto solo pasara con el usuario maestro. Los usuarios que se creen por el usuario maestro podran ser desbloqueados por dicho usuario.
+
 # INICIO DE SESION.
 
-Para el inicio de sesion puede usar contraseña 12234 y usuario sebas. 
+Para iniciar sesion lo puede hacer desde 3 roles diferentes.
+1. admin@admin.com  contraseña 123 Rol Administrador
+2. sebas@gmial.com  contraseña 123456 Rol Generador
+3. andrea@gmail.com constrseña 123 Rol Trasnportador 
 
 <img src="imagenes/inicio.png" >
 
-## Acceso al CRUD se realiza por medio de html python (flask).
+## Ejecución del software.
 
-dentro de python usando el framewok flask hacemos llamado a los procedimentos internos del SQL y recargamos nuevamente la pagina para poder visualizar dichos cambios. Los cuales se pueden realizar con la siguiente interfaz la cual puede agregar,leer,actualizar y eliminar registros.
-![CRUD](imagenes/CRUD.png)
+1. El Rol administrador.
+Este rol ingresa las empresas y los usuarios que tendran dichas empresas para generar su programa de citas de cargue o descargue y las empresasw que podran ingresar al sistema para poder capturar dicas citas.
 
-## Acceso a los archivos.
+2. El rol generador 
+es el encargado de generar las ventanas horarias en que se prodran recibir a los transportadores en este rol se pueden hacer modificaciones o liminar dicahs citas sin embargo no esten tomadas.
+
+3. El rol Trasnportador
+Es el rol de las trasnportadoraqs las cuales podran crear sus vehiculos y tomar lasw sitas generadas por el rol generador ellos podran gestionar su flota eliminando vehiculos y reasignando citas a sus vehiculos.
+
+## Estructura del sistema
+
+Flask maneja rutas REST
+MySQL almacena datos
+Frontend usa fetch API
+Sesiones controlan accesos
+
+# Pagina de inicio del programa.
+
+<img src="imagenes/inicio.png" >
+
+# ROL ADMINISTRADOR
+
+## Creacion de empresas.
+
+![alt creacion de empresa](<imagenes/Creacion de empresas.png>)
+
+## creacion de usuario.
+
+![alt creacion de usuario](<imagenes/creacion usuario.png>)
+
+#  ROL GENERADOR
+
+## creacion de citas
+![alt creacion de citas](<imagenes/creacion de citas.png>)
+
+## visualizar y modificar citas creadas.
+
+![alt visulizacion de citas](<imagenes/visualizacion de citas.png>)
+
+# ROL TRASNPORTADOR
+
+## Creacion de vehiculos
+
+![alt creacion vechiculos](<imagenes/creacion vehiculos.png>)
+
+## visulizacion vechiculos
+
+![alt visualizacion vehiculos](<imagenes/visulizacion vehiculos}.png>)
+
+## Citas pendientes
+
+![alt citas pendietnes](<imagenes/citas pendientes.png>)
+
+## mis citas
+
+![alt mis citas](<imagenes/mis citas.png>)
+
+# Acceso a los archivos.
 
 Como tenemos el estructura flask cada archivo se encuentra en una carpeta especifica por favor ejecutar el archivo conexion.py antes de hacer apertura de los html.

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Citas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilocitas.css') }}">
+</head>
+<body>
+
+<h1>Gestión de Citas</h1>
+
+<!-- ============================= -->
+<!-- 📝 CREAR CITA -->
+<!-- ============================= -->
+<div class="form-container">
+    <h2>Crear Cita</h2>
+
+    <input type="datetime-local" id="inicio">
+    <input type="datetime-local" id="fin">
+    <input type="text" id="tipo" placeholder="Tipo de cita">
+
+    <button onclick="crearCita()">Crear Cita</button>
+</div>
+
+<hr>
+
+<!-- ============================= -->
+<!-- 📊 TABLA DE CITAS -->
+<!-- ============================= -->
+<h2>Mis Citas</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Tipo</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="tablaCitas"></tbody>
+</table>
+
+<script>
+
+let citaEditando = null;
+
+// ==============================
+// 🔄 CARGAR CITAS
+// ==============================
+function cargarCitas() {
+    fetch('/mis_citas_data')
+    .then(res => res.json())
+    .then(data => {
+        let tabla = document.getElementById("tablaCitas");
+        tabla.innerHTML = "";
+
+        data.forEach(c => {
+            let botones = "";
+
+            if (c.estado === "pendiente") {
+                botones = `
+                    <button onclick="cargarEditar(${c.id_cita}, '${c.tipo_cita}')">Editar</button>
+                    <button onclick="eliminarCita(${c.id_cita})">Eliminar</button>
+                `;
+            } else {
+                botones = `<span style="color: gray;">No editable</span>`;
+            }
+
+            tabla.innerHTML += `
+                <tr>
+                    <td>${c.id_cita}</td>
+                    <td>${c.fecha_hora_inicio}</td>
+                    <td>${c.fecha_hora_fin}</td>
+                    <td>${c.tipo_cita}</td>
+                    <td>${c.estado}</td>
+                    <td>${botones}</td>
+                </tr>
+            `;
+        });
+    });
+}
+
+
+// ==============================
+// ➕ CREAR O ACTUALIZAR CITA
+// ==============================
+function crearCita() {
+
+    let data = {
+        inicio: document.getElementById("inicio").value,
+        fin: document.getElementById("fin").value,
+        tipo: document.getElementById("tipo").value
+    };
+
+    // 🔄 Si estamos editando
+    if (citaEditando) {
+        data.id = citaEditando;
+
+        fetch('/cita/actualizar', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            alert("Cita actualizada");
+            limpiarFormulario();
+            cargarCitas();
+        });
+
+    } else {
+        // ➕ Crear nueva
+        fetch('/cita', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            alert("Cita creada");
+            limpiarFormulario();
+            cargarCitas();
+        });
+    }
+}
+
+
+// ==============================
+// ✏️ CARGAR DATOS PARA EDITAR
+// ==============================
+function cargarEditar(id, tipo) {
+    citaEditando = id;
+
+    document.getElementById("tipo").value = tipo;
+
+    alert("Editando cita ID: " + id);
+}
+
+
+// ==============================
+// ❌ ELIMINAR
+// ==============================
+function eliminarCita(id) {
+    if (!confirm("¿Eliminar esta cita?")) return;
+
+    fetch(`/cita/${id}`, {
+        method: 'DELETE'
+    })
+    .then(() => {
+        alert("Cita eliminada");
+        cargarCitas();
+    });
+}
+
+
+// ==============================
+// 🧹 LIMPIAR FORMULARIO
+// ==============================
+function limpiarFormulario() {
+    citaEditando = null;
+
+    document.getElementById("inicio").value = "";
+    document.getElementById("fin").value = "";
+    document.getElementById("tipo").value = "";
+}
+
+
+// ==============================
+// 🚀 INICIO
+// ==============================
+cargarCitas();
+
+</script>
+
+
+
+<a href="/logout">
+    <button style="background-color: red; color: white;">
+        Cerrar Sesión
+    </button>
+</a>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+/* ============================= */
+/* 🌐 GENERAL */
+/* ============================= */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f7fb;
+    margin: 0;
+    padding: 20px;
+}
+
+/* ============================= */
+/* 🏷️ TITULOS */
+/* ============================= */
+h1 {
+    color: #0d47a1;
+    text-align: center;
+}
+
+h2 {
+    color: #1565c0;
+}
+
+/* ============================= */
+/* 📦 CONTENEDOR FORM */
+/* ============================= */
+.form-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    margin: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ============================= */
+/* ✏️ INPUTS */
+/* ============================= */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* ============================= */
+/* 🔘 BOTONES */
+/* ============================= */
+button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Crear */
+button {
+    background-color: #1976d2;
+    color: white;
+}
+
+button:hover {
+    background-color: #0d47a1;
+}
+
+/* Editar */
+button[onclick*="cargarEditar"] {
+    background-color: #0288d1;
+}
+
+/* Eliminar */
+button[onclick*="eliminar"] {
+    background-color: #d32f2f;
+}
+
+/* ============================= */
+/* 📊 TABLA */
+/* ============================= */
+table {
+    width: 90%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+th {
+    background-color: #1565c0;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* ============================= */
+/* ⚠️ ESTADO */
+/* ============================= */
+td:nth-child(5) {
+    font-weight: bold;
+}
+
+td:nth-child(5):contains("pendiente") {
+    color: orange;
+}
+
+td:nth-child(5):contains("asignada") {
+    color: green;
+}
+
+/* ============================= */
+/* 📱 RESPONSIVE */
+/* ============================= */
+@media (max-width: 768px) {
+    .form-container {
+        width: 90%;
+    }
+
+    table {
+        width: 100%;
+    }
+}

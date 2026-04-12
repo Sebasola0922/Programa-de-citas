@@ -1,0 +1,141 @@
+/* ============================= */
+/* 🌐 ESTILOS GENERALES */
+/* ============================= */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f7fb;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================= */
+/* 🔵 HEADER */
+/* ============================= */
+
+h1 {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+}
+
+/* ============================= */
+/* 📦 CONTENEDORES */
+/* ============================= */
+
+h2 {
+    color: #1e3a8a;
+    margin-top: 30px;
+}
+
+h3 {
+    color: #374151;
+}
+
+hr {
+    margin: 40px 0;
+}
+
+/* ============================= */
+/* 📝 INPUTS */
+/* ============================= */
+
+input,select {
+    width: 250px;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 5px rgba(30, 58, 138, 0.5);
+}
+
+/* ============================= */
+/* 🔘 BOTONES */
+/* ============================= */
+
+button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #1e40af;
+}
+
+/* Botón eliminar */
+button:last-child {
+    background-color: #dc2626;
+}
+
+button:last-child:hover {
+    background-color: #991b1b;
+}
+
+/* ============================= */
+/* 📊 TABLAS */
+/* ============================= */
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+thead {
+    background-color: #1e3a8a;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f1f5f9;
+}
+
+tr:hover {
+    background-color: #e0e7ff;
+}
+
+/* ============================= */
+/* 📦 FORMULARIOS */
+/* ============================= */
+
+form, .form-container {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ============================= */
+/* 📱 RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+
+    input {
+        width: 90%;
+    }
+}

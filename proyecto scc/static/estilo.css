@@ -22,3 +22,26 @@ table, th, td {
    
 
 }
+.btn-conductor {
+    display: inline-block;
+    background: linear-gradient(135deg, #1e88e5, #0d47a1);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 6px 15px rgba(25, 118, 210, 0.3);
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.btn-conductor:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(13, 71, 161, 0.4);
+    background: linear-gradient(135deg, #2196f3, #0d47a1);
+}
+
+.btn-conductor:active {
+    transform: scale(0.98);
+}

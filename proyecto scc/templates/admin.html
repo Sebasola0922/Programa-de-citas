@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panel Admin</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='estiloadmin.css') }}">
+</head>
+<body>
+
+<h1>Panel Administrador 👑</h1>
+
+<!-- ================= EMPRESAS ================= -->
+<h2>Empresas</h2>
+
+<input id="e_id" type="hidden" required>
+<input id="nombre" placeholder="Nombre" required><br>
+<select id="tipo" name="Tipo" required>
+    <option value="" disabled selected>Seleccione el tipo...</option>
+    <option value="Generadora">Generadora</option>
+    <option value="Transportadora">Transportadora</option>
+</select><br>
+
+<input id="direccion" placeholder="Dirección" required><br>
+<input id="telefono" placeholder="Teléfono" required><br>
+<input id="email" placeholder="Email" required><br>
+
+<button onclick="guardarEmpresa()">Guardar / Actualizar</button>
+
+<h3>Lista de Empresas</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="tablaEmpresas"></tbody>
+</table>
+
+<hr>
+
+<!-- ================= USUARIOS ================= -->
+<h2>Usuarios</h2>
+
+<input id="u_id" type="hidden">
+<input id="u_nombre" placeholder="Nombre"><br>
+<input id="u_email" placeholder="Email"><br>
+<input id="u_password" placeholder="Contraseña"><br>
+<input id="u_rol" placeholder="Rol"><br>
+<input id="u_empresa" placeholder="ID Empresa"><br>
+
+<button onclick="guardarUsuario()">Guardar / Actualizar</button>
+
+<h3>Lista de Usuarios</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="tablaUsuarios"></tbody>
+</table>
+
+<a href="/logout">
+    <button style="background-color: red; color: white;">
+        Cerrar Sesión
+    </button>
+</a>
+
+<script>
+
+// ================= EMPRESAS =================
+
+function guardarEmpresa() {
+    let id = document.getElementById("e_id").value;
+
+    let url = id ? '/empresa/actualizar' : '/empresa';
+    
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: id,
+            nombre: nombre.value,
+            tipo: tipo.value,
+            direccion: direccion.value,
+            telefono: telefono.value,
+            email: email.value
+        })
+    })
+    .then(() => {
+        limpiarEmpresa();
+        cargarEmpresas();
+    });
+}
+
+function cargarEmpresas() {
+    fetch('/empresas')
+    .then(res => res.json())
+    .then(data => {
+        let tabla = document.getElementById("tablaEmpresas");
+        tabla.innerHTML = "";
+
+        data.forEach(e => {
+            tabla.innerHTML += `
+                <tr>
+                    <td>${e.id_empresa}</td>
+                    <td>${e.nombre}</td>
+                    <td>
+                        <button onclick="editarEmpresa(${e.id_empresa}, '${e.nombre}', '${e.tipo_empresa}', '${e.direccion}', '${e.telefono}', '${e.email}')">Editar</button>
+                        <button onclick="eliminarEmpresa(${e.id_empresa})">Desactivar</button>
+                    </td>
+                </tr>
+            `;
+        });
+    });
+}
+
+function editarEmpresa(id, nombreE, tipoE, direccionE, telefonoE, emailE) {
+    e_id.value = id;
+    nombre.value = nombreE;
+    tipo.value = tipoE;
+    direccion.value = direccionE;
+    telefono.value = telefonoE;
+    email.value = emailE;
+}
+
+function eliminarEmpresa(id) {
+    fetch('/empresa/' + id, { method: 'DELETE' })
+    .then(() => cargarEmpresas());
+}
+
+function limpiarEmpresa() {
+    e_id.value = "";
+    nombre.value = "";
+    tipo.value = "";
+    direccion.value = "";
+    telefono.value = "";
+    email.value = "";
+}
+
+
+// ================= USUARIOS =================
+
+function guardarUsuario() {
+    let id = document.getElementById("u_id").value;
+
+    let url = id ? '/usuario/actualizar' : '/usuario';
+
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: id,
+            nombre: u_nombre.value,
+            email: u_email.value,
+            password: u_password.value,
+            rol: u_rol.value,
+            id_empresa: u_empresa.value
+        })
+    })
+    .then(() => {
+        limpiarUsuario();
+        cargarUsuarios();
+    });
+}
+
+function cargarUsuarios() {
+    fetch('/usuarios')
+    .then(res => res.json())
+    .then(data => {
+        let tabla = document.getElementById("tablaUsuarios");
+        tabla.innerHTML = "";
+
+        data.forEach(u => {
+            tabla.innerHTML += `
+                <tr>
+                    <td>${u.id_usuario}</td>
+                    <td>${u.nombre}</td>
+                    <td>${u.email}</td>
+                    <td>
+                        <button onclick="editarUsuario(${u.id_usuario}, '${u.nombre}', '${u.email}', '${u.rol}', ${u.id_empresa})">Editar</button>
+                        <button onclick="eliminarUsuario(${u.id_usuario})">Desactivar</button>
+                    </td>
+                </tr>
+            `;
+        });
+    });
+}
+
+function editarUsuario(id, nombreU, emailU, rolU, empresaU) {
+    u_id.value = id;
+    u_nombre.value = nombreU;
+    u_email.value = emailU;
+    u_rol.value = rolU;
+    u_empresa.value = empresaU;
+}
+
+function eliminarUsuario(id) {
+    fetch('/usuario/' + id, { method: 'DELETE' })
+    .then(() => cargarUsuarios());
+}
+
+function limpiarUsuario() {
+    u_id.value = "";
+    u_nombre.value = "";
+    u_email.value = "";
+    u_password.value = "";
+    u_rol.value = "";
+    u_empresa.value = "";
+}
+
+
+// ================= CARGA INICIAL =================
+cargarEmpresas();
+cargarUsuarios();
+
+</script>
+
+</body>
+</html>

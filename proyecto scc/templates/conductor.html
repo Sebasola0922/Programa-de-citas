@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Citas - Conductor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estiloconductor.css') }}">
+</head>
+<body>
+
+<h1>🚚 Consulta de Citas por Placa</h1>
+
+<div class="form-container">
+
+    <input type="text" id="placa" placeholder="Ingrese la placa del vehículo">
+
+    <button onclick="buscarCitas()">Buscar Citas</button>
+
+</div>
+
+<hr>
+
+<h2>📅 Resultados</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Estado</th>
+            <th>Tipo</th>
+            <th>Empresa</th>
+            <th>Placa</th>
+            <th>Vehículo</th>
+            <th>Capacidad</th>
+        </tr>
+    </thead>
+
+    <tbody id="tablaResultados"></tbody>
+</table>
+
+<a href="/logout">
+    <button style="background-color: red; color: white;">
+        Cerrar Sesión
+    </button>
+</a>
+
+
+<script>
+
+function buscarCitas() {
+
+    let placa = document.getElementById("placa").value;
+
+    if (!placa) {
+        alert("Ingrese una placa");
+        return;
+    }
+
+    fetch("/citas_por_placa", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({placa: placa})
+    })
+    .then(r => r.json())
+    .then(data => {
+
+        let tabla = document.getElementById("tablaResultados");
+        tabla.innerHTML = "";
+
+        if (!data || data.length === 0) {
+            tabla.innerHTML = "<tr><td colspan='9'>No hay citas para esta placa</td></tr>";
+            return;
+        }
+
+        data.forEach(c => {
+            tabla.innerHTML += `
+                <tr>
+                    <td>${c.id_cita}</td>
+                    <td>${c.fecha_hora_inicio}</td>
+                    <td>${c.fecha_hora_fin}</td>
+                    <td>${c.estado}</td>
+                    <td>${c.tipo_cita}</td>
+                    <td>${c.empresa}</td>
+                    <td>${c.placa}</td>
+                    <td>${c.tipo_vehiculo}</td>
+                    <td>${c.capacidad}</td>
+                </tr>
+            `;
+        });
+    });
+}
+
+</script>
+
+</body>
+</html>

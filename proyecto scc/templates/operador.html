@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Transportador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilooperador.css') }}">
+</head>
+<body>
+
+<h1>🚚 Panel Transportador</h1>
+
+<!-- ================= VEHÍCULOS ================= -->
+<section>
+    <h2>➕ Crear Vehículo</h2>
+
+    <input type="text" id="placa" placeholder="Placa">
+    <input type="text" id="tipo" placeholder="Tipo">
+    <input type="number" id="capacidad" placeholder="Capacidad">
+
+    <button onclick="crearVehiculo()">Guardar Vehículo</button>
+</section>
+
+<hr>
+
+<section>
+    <h2>🚗 Mis Vehículos</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                                <th>Placa</th>
+                <th>Tipo</th>
+                <th>Capacidad</th>
+            </tr>
+        </thead>
+        <tbody id="tablaVehiculos"></tbody>
+    </table>
+</section>
+
+<hr>
+
+<!-- ================= CITAS ================= -->
+<section>
+    <h2>📅 Citas Pendientes</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Empresa</th>
+                <th>Inicio</th>
+                <th>Tipo</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tablaCitas"></tbody>
+    </table>
+</section>
+
+<!-- ================= MODAL SIMPLE ================= -->
+<div id="modal" style="display:none; position:fixed; top:20%; left:30%; background:white; padding:20px;">
+    <h3>Asignar Vehículo</h3>
+
+    <select id="vehiculoSelect"></select>
+
+    <button onclick="confirmarTomarCita()">Tomar Cita</button>
+    <button onclick="cerrarModal()">Cerrar</button>
+</div>
+
+<hr>
+
+<section>
+    <h2>📌 Mis Citas Asignadas</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Estado</th>
+                <th>Tipo de cita</th>
+                <th>Id empresa</th>
+                <th>Vehículo</th>
+                <th>Tipo vehiculo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tablaMisCitas"></tbody>
+    </table>
+</section>
+<!-- ================= MODAL vehiculo ================= -->
+
+<div id="modalVehiculo" style="display:none; position:fixed; top:20%; left:30%; background:white; padding:20px;">
+    
+    <h3>🚚 Cambiar Vehículo de la Cita</h3>
+
+    <select id="nuevoVehiculo"></select>
+
+    <button onclick="guardarNuevoVehiculo()">Guardar</button>
+    <button onclick="cerrarModalVehiculo()">Cerrar</button>
+</div>
+
+
+
+<a href="/logout">
+    <button style="background-color: red; color: white;">
+        Cerrar Sesión
+    </button>
+</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+let citaSeleccionada = null;
+
+// ================= VEHÍCULOS =================
+function crearVehiculo() {
+    fetch("/vehiculo", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            placa: document.getElementById("placa").value,
+            tipo: document.getElementById("tipo").value,
+            capacidad: document.getElementById("capacidad").value
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        alert(data.mensaje || data.error);
+        cargarVehiculos();
+    });
+}
+
+function cargarVehiculos() {
+    fetch("/vehiculos")
+    .then(r => r.json())
+    .then(data => {
+
+        let tabla = document.getElementById("tablaVehiculos");
+        tabla.innerHTML = "";
+
+        data.forEach(v => {
+            tabla.innerHTML += `
+                <tr>
+                    <td>${v.placa}</td>
+                    <td>${v.tipo}</td>
+                    <td>${v.capacidad}</td>
+                    <td>
+                        <button onclick="eliminarVehiculo(${v.id_vehiculo})">
+                            🗑 Eliminar
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+    });
+}
+
+// ================= CITAS =================
+function cargarCitas() {
+    fetch("/citas_pendientes")
+    .then(r => r.json())
+    .then(data => {
+        let tabla = document.getElementById("tablaCitas");
+        tabla.innerHTML = "";
+
+        data.forEach(c => {
+            tabla.innerHTML += `
+                <tr>
+                    <td>${c.empresa}</td>
+                    <td>${c.fecha_hora_inicio}</td>
+                    <td>${c.tipo_cita}</td>
+                    <td>
+                        <button onclick="abrirModal(${c.id_cita})">
+                            Tomar
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+    });
+}
+
+// ================= MODAL =================
+function abrirModal(id) {
+    citaSeleccionada = id;
+    document.getElementById("modal").style.display = "block";
+}
+
+function cerrarModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+// ================= TOMAR CITA =================
+function confirmarTomarCita() {
+    let vehiculo = document.getElementById("vehiculoSelect").value;
+
+    fetch("/tomar_cita", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            id_cita: citaSeleccionada,
+            vehiculo: vehiculo
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        alert(data.mensaje || data.error);
+        cerrarModal();
+        cargarCitas();
+    });
+}
+
+// mostrar datos en tabla de citas asignadas
+
+function cargarMisCitas() {
+    fetch("/mis_citas_data1")
+    .then(r => r.json())
+    .then(data => {
+        let tabla = document.getElementById("tablaMisCitas");
+        tabla.innerHTML = "";
+
+        data.forEach(c => {
+            tabla.innerHTML += `
+            <tr>
+            <td>${c.id_cita}</td>
+            <td>${c.fecha_hora_inicio}</td>
+            <td>${c.fecha_hora_fin}</td>
+            <td>${c.estado}</td>
+            <td>${c.tipo_cita}</td>
+            <td>${c.id_empresa}</td>
+            <td>${c.placa ?? 'Sin vehículo'}</td>
+            <td>${c.tipo_vehiculo ?? 'N/A'}</td>
+            <td>
+                <button onclick="abrirCambioVehiculo(${c.id_cita})">
+                Cambiar vehículo
+                </button>
+            </td>
+        </tr>
+`   ;
+            
+               
+        });
+        tabla.innerHTML = html;
+    });
+}
+
+
+
+
+
+
+
+let citaEditandoVehiculo = null;
+
+// abrir modal
+function abrirCambioVehiculo(id_cita) {
+    citaEditandoVehiculo = id_cita;
+
+    fetch("/vehiculos")
+    .then(r => r.json())
+    .then(data => {
+        let select = document.getElementById("nuevoVehiculo");
+        select.innerHTML = "";
+
+        data.forEach(v => {
+            select.innerHTML += `
+                <option value="${v.id_vehiculo}">
+                    ${v.placa} - ${v.tipo}
+                </option>
+            `;
+        });
+
+        document.getElementById("modalVehiculo").style.display = "block";
+    });
+}
+
+// cerrar modal
+function cerrarModalVehiculo() {
+    document.getElementById("modalVehiculo").style.display = "none";
+}
+
+// guardar cambio
+function guardarNuevoVehiculo() {
+
+    let vehiculo = document.getElementById("nuevoVehiculo").value;
+
+    fetch("/cita/actualizar_vehiculo", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            id_cita: citaEditandoVehiculo,
+            vehiculo: vehiculo
+        })
+    })
+    .then(r => r.json())
+    .then(res => {
+        alert(res.mensaje || res.error);
+        cerrarModalVehiculo();
+        cargarMisCitas();
+    });
+}
+
+// eliminar vehiculo
+
+function eliminarVehiculo(id) {
+
+    if (!confirm("¿Seguro que quieres eliminar este vehículo?")) return;
+
+    fetch(`/vehiculo/${id}`, {
+        method: "DELETE"
+    })
+    .then(r => r.json())
+    .then(res => {
+        alert(res.mensaje || res.error);
+        cargarVehiculos(); // 🔥 refresca tabla
+    });
+}
+
+
+
+// ================= INIT =================
+cargarVehiculos();
+cargarCitas();
+cargarMisCitas();
+
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f8ff;
+    margin: 0;
+    padding: 20px;
+    color: #1e2a38;
+}
+
+/* ================= TITULO ================= */
+h1 {
+    text-align: center;
+    color: #0d47a1;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #1565c0;
+    margin-top: 25px;
+}
+
+/* ================= CONTENEDORES ================= */
+section {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ================= INPUT ================= */
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cfd8dc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #1976d2;
+}
+
+/* ================= BOTONES ================= */
+button {
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0d47a1;
+    transform: translateY(-2px);
+}
+
+/* botón secundario (modal cerrar) */
+button:nth-child(2) {
+    background: #e53935;
+}
+
+button:nth-child(2):hover {
+    background: #b71c1c;
+}
+
+/* ================= TABLAS ================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+th {
+    background: #1976d2;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #e3f2fd;
+}
+
+tr:hover {
+    background: #e3f2fd;
+}
+
+/* ================= MODAL ================= */
+#modal, #modalVehiculo {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    width: 300px;
+}
+
+/* ================= SELECT ================= */
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cfd8dc;
+    margin-bottom: 10px;
+}
+
+/* ================= EFECTO BOTONES ACCIÓN ================= */
+td button {
+    background: #1e88e5;
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+}
+
+td button:hover {
+    background: #0d47a1;
+}
