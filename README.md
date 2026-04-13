@@ -90,8 +90,8 @@ El aplicativo esta desarrollado para ser ejecutado en un entorno web. Donde el u
 
 Para iniciar sesion lo puede hacer desde 3 roles diferentes.
 1. admin@admin.com  contraseña 123 Rol Administrador
-2. sebas@gmial.com  contraseña 123456 Rol Generador
-3. andrea@gmail.com constrseña 123 Rol Trasnportador 
+
+Para las demas paginas el usurio adminisrador debe crear los roles. el rol se da de acuerdo al tipo de empresa.
 
 <img src="imagenes/inicio.png" >
 
